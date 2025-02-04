@@ -1,0 +1,8 @@
+import pandas as pd 
+import numpy as np 
+import yfinance as yf
+import scipy.stats as stats
+import matplotlib.pyplot as plt 
+
+# class InstrunmentComparitor(): 
+    
