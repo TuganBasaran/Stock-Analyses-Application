@@ -1,4 +1,7 @@
-from FinancialInstrunment import FinancialInstrunment
+from InstrunmentComparitor import InstrunmentComparitor as IC
 
-stock = FinancialInstrunment(ticker = "AAPL", start = "2015-01-01", end =  "2019-12-31")
-stock.plot_returns()
+tickers = ['AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'NVDA', 'TSLA']
+start = "2015-01-01" 
+end =  "2019-12-31"
+comparitor = IC(tickers = tickers, start = start, end = end)
+comparitor.print_head_ins()
