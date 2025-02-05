@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 '''
 '''
 TODO:
-- Add performance metrics calculations
+- Add annualized performance method 
 - Add skewness calculation method 
 - Add kurtosisi calculation method 
 - Add rolling statistics (EMA 7/21/50 ....) 
@@ -68,19 +68,7 @@ class FinancialInstrunment():
             resampled_returns = np.log(resampled_price / resampled_price.shift(1))
             return resampled_returns.std()
 
-    def plot_normal_distribution(self, returns): 
-        mu = returns.mean()
-        sigma = returns.std()
-        x = np.linspace(returns.min(), returns.max(), 10000)
-        y = stats.norm.pdf(x, loc=mu, scale=sigma)
-        plt.figure(figsize=(20, 8))
-        plt.hist(returns, bins=500, density=True, label=f"Frequency Distribution of Returns ({self.ticker})")
-        plt.plot(x, y, linewidth=3, color="red", label="Normal Distribution")
-        plt.title("Normal Distribution", fontsize=20)
-        plt.xlabel("Returns", fontsize=15)
-        plt.ylabel("pdf", fontsize=15)
-        plt.legend(fontsize=15)
-        plt.show()
+    
 
     def plot_returns(self, freq=None, kind="hist"): 
         plt.figure(figsize=(12, 8))
@@ -89,9 +77,20 @@ class FinancialInstrunment():
         else: 
             resampled_price = self.data[self.price_name].resample(freq).last()
             returns = np.log(resampled_price / resampled_price.shift(1))
-    
-        returns.plot(kind=kind)
-        self.plot_normal_distribution(returns)
+
+        # Normal dağılım ve histogram aynı figure üzerinde
+        mu = returns.mean()
+        sigma = returns.std()
+        x = np.linspace(returns.min(), returns.max(), 10000)
+        y = stats.norm.pdf(x, loc=mu, scale=sigma)
+        plt.hist(returns, bins=500, density=True, label=f"Returns ({self.ticker})")
+        plt.plot(x, y, linewidth=3, color="red", label="Normal Distribution")
+        plt.title(f"{self.ticker} Returns Distribution", fontsize=20)
+        plt.xlabel("Returns", fontsize=15)
+        plt.ylabel("Density", fontsize=15)
+        plt.legend(fontsize=15)
+        plt.grid(True)
+        plt.show()
     
     def std_mean_frame_ann(self): 
         freqs = ["YE", "QE", "ME", "W-FRI", "D"]
