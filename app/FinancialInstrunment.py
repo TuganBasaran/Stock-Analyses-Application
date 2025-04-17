@@ -7,13 +7,14 @@ import matplotlib.pyplot as plt
 '''
     Application for financial instrunment analysis 
 '''
+
 '''
 TODO:
 - Add annualized performance method 
 - Add skewness calculation method 
 - Add kurtosisi calculation method 
 - Add rolling statistics (EMA 7/21/50 ....) 
-
+- Add Investment Multiple and CAGR (Compound Annual Growth Rate) method 
 '''
 
 class FinancialInstrunment(): 
@@ -33,21 +34,36 @@ class FinancialInstrunment():
         return "Financial Instrunment (ticker: {}, start: {}, end: {})".format(self.ticker, self.start, self.end)
     
     def get_data(self): 
+        ''' Downloading the data from the yahoo finance, renaming the ticker "close" name to "price".
+        '''
         price_name = "{}_price".format(self.ticker)
         raw = yf.download(tickers= self.ticker, start= self.start, end= self.end, multi_level_index=False).Close.to_frame()
         raw.rename(columns={"Close" : price_name}, inplace=True)
         self.data = raw 
 
     def log_returns(self): 
+        ''' Creating logarithmic daily returns'''
         self.data[self.log_return_name] = np.log(self.data / self.data.shift(1))
 
     def _setup_plot(self, title): 
+        ''' Creating a price chart using line'''
         plt.grid(True)
         plt.legend(fontsize=15)
+        plt.plot(data=self.data, figsize=(15,8))
         plt.title(f"{self.ticker} {title}")
         plt.show()
 
+    def investment_multiple(self): 
+        '''Calculating the investment multiple from start date to end date'''
+        start_price = self.data.iloc[0] 
+        end_price = self.data.iloc[-1]
+        multiple = round(end_price / start_price, 3)
+        print(f"Investment multiple: {multiple}")
+        return multiple
+
+
     def plot_prices(self): 
+        print(f"Plotting {self.ticker}")
         price_name = "{}_price".format(self.ticker)
         self.data[price_name].plot(figsize= (12,8))
         self._setup_plot("Price Chart")
@@ -93,6 +109,10 @@ class FinancialInstrunment():
         plt.show()
     
     def std_mean_frame_ann(self): 
+        '''
+        Creates an standard deviation and mean scatter graph by time period
+        Allowing trader to decide which time period is efficient 
+        '''
         freqs = ["YE", "QE", "ME", "W-FRI", "D"]
         periods = [1, 4, 12, 52, 252]
         mean_list = []
@@ -109,9 +129,10 @@ class FinancialInstrunment():
         for i in frame.index: 
             plt.annotate(i, xy=(frame.loc[i, "Std_Risk"] + 0.001, frame.loc[i, "Mean_Reward"] + 0.001), size = 15)
         plt.ylim(0, 0.3)
+        plt.grid(True)
         plt.xlabel("Risk (Std)", fontsize = 15)
         plt.ylabel("Return (Mean)", fontsize = 15)
         plt.title("Annualized Risk & Return", fontsize = 20)
         plt.show()
 
-            
+    

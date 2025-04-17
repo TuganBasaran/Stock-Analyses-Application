@@ -22,13 +22,13 @@ class InstrunmentComparitor():
         return f"Instrunment Comparitor (tickers = {self.tickers}, start={self.start}, end={self.end})"
 
     def get_data(self): 
-        instrunments = []
-        for i in self.tickers: 
-            instrunment  = FinancialInstrunment(i, self.start, self.end)
-            instrunments.append(instrunment)
-        self.instrunments = instrunments
-
-    def print_head_ins(self): 
-        for i in self.instrunments: 
-            print(i.data.head() , "\n")
+        raw = yf.download(tickers= self.tickers, start= self.start, end=self.end).Close
+        print(raw)
         
+
+
+    
+
+     
+
+            
