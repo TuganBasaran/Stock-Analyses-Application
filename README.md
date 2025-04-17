@@ -2,8 +2,6 @@
 
 A Python application for analyzing and visualizing financial instruments data. This tool helps investors and financial analysts examine stock performance metrics, calculate risk and return ratios, and make data-driven investment decisions.
 
-![Risk-Return Chart](https://github.com/username/Stock-Analyses-Application/raw/main/examples/risk_return_chart.png)
-
 ## Features
 
 - **Individual Stock Analysis**: Detailed examination of a single financial instrument
