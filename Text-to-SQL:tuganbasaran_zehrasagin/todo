@@ -1,0 +1,12 @@
+Chatte sorun olduğunda sorduğumda sebebini söylesin
+Daha önce çizdiği Grafiği attığımda bana onu açıklayabilsin
+Çizilen grafiğin üstüne böyle gösterme şöyle göster diyince yapsın
+Prediction yapsın ileriki ayların vs sorduğumda
+Rag ve sql kısmı birleşik datalarda ikisini analiz edip cevap verebilsin
+Cevabı tek kelime vermesin cümle kursun
+
+Linear Regression (Doğrusal Regresyon): En basit tahmin yöntemi. Zaman serilerindeki eğilimi (trend) yakalar.
+
+Exponential Smoothing (Üstel Düzleştirme): Eğilim ve mevsimselliği yakalayabilen bir model. Veri en az 12 ay ise mevsimsellik de ekleniyor.
+
+ARIMA (Autoregressive Integrated Moving Average): Zaman serilerinde yaygın kullanılan bir istatistiksel model.

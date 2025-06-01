@@ -1,0 +1,12 @@
+pandas 
+SQLAlchemy 
+python-dotenv
+matplotlib
+streamlit
+google-generativeai
+python-docx
+pymysql
+cryptography
+statsmodels
+scikit-learn
+plotly

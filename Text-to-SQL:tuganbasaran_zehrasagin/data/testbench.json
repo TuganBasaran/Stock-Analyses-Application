@@ -1,0 +1,107 @@
+[
+  {
+    "question": "How many orders were placed in January?",
+    "expected_sql": "SELECT COUNT(*) FROM orders WHERE MONTH(order_date) = 1;",
+    "pandas_code": "df[df['order_date'].dt.month == 1].shape[0]"
+  },
+  {
+    "question": "What is the total revenue?",
+    "expected_sql": "SELECT SUM(amount) FROM orders;",
+    "pandas_code": "df['amount'].sum()"
+  },
+  {
+    "question": "Which customer spent the most?",
+    "expected_sql": "SELECT customer_name, SUM(amount) AS total FROM orders GROUP BY customer_name ORDER BY total DESC LIMIT 1;",
+    "pandas_code": "df.groupby('customer_name')['amount'].sum().sort_values(ascending=False).head(1)"
+  },
+  {
+    "question": "What is the average order amount?",
+    "expected_sql": "SELECT AVG(amount) FROM orders;",
+    "pandas_code": "df['amount'].mean()"
+  },
+  {
+    "question": "How many unique customers are there?",
+    "expected_sql": "SELECT COUNT(DISTINCT customer_name) FROM orders;",
+    "pandas_code": "df['customer_name'].nunique()"
+  },
+  {
+    "question": "List all orders placed by Zeynep.",
+    "expected_sql": "SELECT * FROM orders WHERE customer_name = 'Zeynep';",
+    "pandas_code": "df[df['customer_name'] == 'Zeynep']"
+  },
+  {
+    "question": "Show all orders placed in 2024.",
+    "expected_sql": "SELECT * FROM orders WHERE YEAR(order_date) = 2024;",
+    "pandas_code": "df[df['order_date'].dt.year == 2024]"
+  },
+  {
+    "question": "List customers who spent more than 500 in total.",
+    "expected_sql": "SELECT customer_name FROM orders GROUP BY customer_name HAVING SUM(amount) > 500;",
+    "pandas_code": "df.groupby('customer_name')['amount'].sum()[lambda x: x > 500]"
+  },
+  {
+    "question": "Which month had the highest total revenue?",
+    "expected_sql": "SELECT MONTH(order_date) AS month, SUM(amount) AS total FROM orders GROUP BY month ORDER BY total DESC LIMIT 1;",
+    "pandas_code": "df.groupby(df['order_date'].dt.month)['amount'].sum().sort_values(ascending=False).head(1)"
+  },
+  {
+    "question": "How many orders did Ahmet place?",
+    "expected_sql": "SELECT COUNT(*) FROM orders WHERE customer_name = 'Ahmet';",
+    "pandas_code": "df[df['customer_name'] == 'Ahmet'].shape[0]"
+  },
+  {
+    "question": "List customers with more than 2 orders.",
+    "expected_sql": "SELECT customer_name FROM orders GROUP BY customer_name HAVING COUNT(*) > 2;",
+    "pandas_code": "df['customer_name'].value_counts()[lambda x: x > 2]"
+  },
+  {
+    "question": "Show all orders in descending order of amount.",
+    "expected_sql": "SELECT * FROM orders ORDER BY amount DESC;",
+    "pandas_code": "df.sort_values(by='amount', ascending=False)"
+  },
+  {
+    "question": "What is the minimum order amount?",
+    "expected_sql": "SELECT MIN(amount) FROM orders;",
+    "pandas_code": "df['amount'].min()"
+  },
+  {
+    "question": "What is the maximum order amount?",
+    "expected_sql": "SELECT MAX(amount) FROM orders;",
+    "pandas_code": "df['amount'].max()"
+  },
+  {
+    "question": "Find the average amount per customer.",
+    "expected_sql": "SELECT customer_name, AVG(amount) AS avg_spent FROM orders GROUP BY customer_name;",
+    "pandas_code": "df.groupby('customer_name')['amount'].mean()"
+  },
+  {
+    "question": "List customers who placed orders in March.",
+    "expected_sql": "SELECT DISTINCT customer_name FROM orders WHERE MONTH(order_date) = 3;",
+    "pandas_code": "df[df['order_date'].dt.month == 3]['customer_name'].unique()"
+  },
+  {
+    "question": "Show all orders over 250 in amount.",
+    "expected_sql": "SELECT * FROM orders WHERE amount > 250;",
+    "pandas_code": "df[df['amount'] > 250]"
+  },
+  {
+    "question": "What is the total amount spent by Emir?",
+    "expected_sql": "SELECT SUM(amount) FROM orders WHERE customer_name = 'Emir';",
+    "pandas_code": "df[df['customer_name'] == 'Emir']['amount'].sum()"
+  },
+  {
+    "question": "How many orders were placed before June 2024?",
+    "expected_sql": "SELECT COUNT(*) FROM orders WHERE order_date < '2024-06-01';",
+    "pandas_code": "df[df['order_date'] < '2024-06-01'].shape[0]"
+  },
+  {
+    "question": "Show monthly total sales.",
+    "expected_sql": "SELECT MONTH(order_date) AS month, SUM(amount) AS total FROM orders GROUP BY month;",
+    "pandas_code": "df.groupby(df['order_date'].dt.month)['amount'].sum()"
+  },
+  {
+    "question": "Show the number of orders per customer.",
+    "expected_sql": "SELECT customer_name, COUNT(*) FROM orders GROUP BY customer_name;",
+    "pandas_code": "df['customer_name'].value_counts()"
+  }
+]
